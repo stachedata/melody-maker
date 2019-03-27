@@ -1,0 +1,1 @@
+document.getElementById("play").onclick = () => document.getElementById("tada").play()  
