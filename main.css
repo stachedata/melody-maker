@@ -1,14 +1,26 @@
-.container{
+.rangeContainer{
     display: flex;
-    width: 20px;
+    justify-content: space-between;
     height: 150px;
-    padding: 0;
 }
 
-.container input{
+.rangeContainer input{
     width: 150px;
     height: 20px;
     margin: 0;
     transform-origin: 75px 75px;
     transform: rotate(-90deg);
+}
+
+.noteContainer{
+    display: flex;
+    height: 25px;
+}
+
+.noteContainer div{
+    margin: 0 113px 0 1px;
+}
+
+#container{
+    width: 1000px;
 }
