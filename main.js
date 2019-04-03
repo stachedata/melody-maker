@@ -1,5 +1,8 @@
-const scale = [0,'-',196,220,249.94,261.63,293,329.63,349.23,392,440,493.88,523.25,587.33,659.25]
 const noteValues = [...document.getElementsByTagName('input')]
+const scale = [0,'-',196,220,249.94,261.63,293,329.63,349.23,392,440,493.88,523.25,587.33,659.25]
+
+const bpm = 200
+const setBPM = (b) => 60000/b 
 
 const melodyNotes = (noteValues) => {
     const chosenNotes = []
@@ -11,7 +14,6 @@ const melodyNotes = (noteValues) => {
 }
 
 const playMelody = (melodyNotes, scale) => {  
-
     const holdNote = (melodyNotes,i) => {
         let hold = 1
         i++
@@ -27,21 +29,25 @@ const playMelody = (melodyNotes, scale) => {
         }
         return hold
     }
+    
+    const waitFor = (ms) => new Promise(r => setTimeout(r, ms));
 
-    let i = 0
-    const tempo = 300
+    async function asyncForEach(array, callback) {
+        for (let i = 0; i < array.length; i++) {
+          await callback(array[i], i, array);
+        }
+      }
 
-    const melody = setInterval(() => { 
-        createOscillator(scale[melodyNotes[i]],holdNote(melodyNotes,i))
-        i++
-    }, tempo)
-    setTimeout(() => clearInterval(melody), tempo*16)
+    asyncForEach(melodyNotes, async (note,i) => {
+        createOscillator(scale[note],holdNote(melodyNotes,i))
+        await waitFor(setBPM(bpm));
+    })
 }
 
 const createOscillator = (frequency, hold) => {
     const audio = new (window.AudioContext || window.webkitAudioContext)();
     const oscillator = audio.createOscillator();
-    const noteLength = 200
+    const noteLength = 120
 
     oscillator.type = 'square';
     oscillator.frequency.value = frequency;
@@ -54,7 +60,6 @@ document.getElementById('play').onclick = () => playMelody(melodyNotes(noteValue
 
 const displayNotes = (notes) => {
     let noteDiv = document.getElementsByClassName("noteDiv")
-    console.log(noteDiv)
     notes.forEach( (note,i) => { 
         const updateNotes = () => {
             switch(note.value){
