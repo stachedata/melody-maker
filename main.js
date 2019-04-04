@@ -1,7 +1,7 @@
 const noteValues = [...document.getElementsByTagName('input')]
 const scale = [0,'-',196,220,249.94,261.63,293,329.63,349.23,392,440,493.88,523.25,587.33,659.25]
 
-const bpm = 200
+const bpm = 220
 const setBPM = (b) => 60000/b 
 
 const melodyNotes = (noteValues) => {
@@ -56,48 +56,55 @@ const createOscillator = (frequency, hold) => {
     setTimeout(() => oscillator.stop(0), noteLength*hold)
 }
 
-document.getElementById('play').onclick = () => playMelody(melodyNotes(noteValues),scale)
+document.getElementById('play').onclick = () => {
+    playMelody(melodyNotes(noteValues),scale)
+}
+
+const displayNote = (note,i) => {
+    let svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50' transform='rotate(90)'><text transform='translate(12.5 37.5)'>" + note + "</text></svg>\")"
+    let styleElement = document.head.appendChild(document.createElement("style"));
+    styleElement.innerHTML = "#slider" + i + "::-webkit-slider-thumb {background-image: " + svg + ";} #slider" + i + "::-moz-range-thumb {background-image: " + svg + ";} #slider" + i + "::-ms-thumb {background-image: " + svg + ";}";
+}
 
 const displayNotes = (notes) => {
-    let noteDiv = document.getElementsByClassName("noteDiv")
     notes.forEach( (note,i) => { 
         const updateNotes = () => {
             switch(note.value){
                 case '0':
-                    noteDiv[i].innerText = "Zz"
+                    displayNote('Zz',i)
                     break
                 case '1':
-                    noteDiv[i].innerText = "-"  
+                    displayNote('-',i)
                     break
                 case '2':
                 case '9':
-                    noteDiv[i].innerText = "G"
+                    displayNote('G',i)
                     break
                 case '3':
                 case '10':
-                    noteDiv[i].innerText = "A"
+                    displayNote('A',i)
                     break
                 case '4':
                 case '11':
-                    noteDiv[i].innerText = "B"
+                    displayNote('B',i)
                     break
                 case '5':
                 case '12':
-                    noteDiv[i].innerText = "C"  
+                    displayNote('C',i)  
                     break
                 case '6':
                 case '13':
-                    noteDiv[i].innerText = "D"
+                    displayNote('D',i)
                     break
                 case '7':
                 case '14':
-                    noteDiv[i].innerText = "E"
+                    displayNote('E',i)
                     break
                 case '8':
-                    noteDiv[i].innerText = "F"
+                    displayNote('F',i)
                     break
                 case '15':
-                    noteDiv[i].innerText = "?"
+                    displayNote('?',i)
                     break
             }
 
