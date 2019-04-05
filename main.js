@@ -50,14 +50,23 @@ const createOscillator = (frequency, hold) => {
     const noteLength = 120
 
     oscillator.type = 'square';
-    oscillator.frequency.value = frequency;
+    //oscillator.frequency.value = frequency;
+    oscillator.frequency.setValueAtTime(frequency, audio.currentTime)
     oscillator.connect(audio.destination);
     oscillator.start();
     setTimeout(() => oscillator.stop(0), noteLength*hold)
 }
 
+let alreadyClicked = false
 document.getElementById('play').onclick = () => {
-    playMelody(melodyNotes(noteValues),scale)
+	if(alreadyClicked == false){
+		playMelody(melodyNotes(noteValues),scale)
+		alreadyClicked = true
+		setTimeout(() => alreadyClicked = false, setBPM(bpm)*16)
+	}else{
+		//window.alert("Melody already playing")
+		console.log("wait:", setBPM(bpm)*16)
+	}
 }
 
 const displayNote = (note,i) => {
