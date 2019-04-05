@@ -50,7 +50,6 @@ const createOscillator = (frequency, hold) => {
     const noteLength = 120
 
     oscillator.type = 'square';
-    //oscillator.frequency.value = frequency;
     oscillator.frequency.setValueAtTime(frequency, audio.currentTime)
     oscillator.connect(audio.destination);
     oscillator.start();
