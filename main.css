@@ -1,28 +1,46 @@
-.rangeContainer{
-    display: flex;
-    justify-content: space-between;
-    height: 150px;
-}
-
-.rangeContainer input{
-    width: 150px;
-    height: 20px;
+html,body{
+    width: 100%;
+    height: 100%;
+    position: fixed;
     margin: 0;
-    transform-origin: 75px 75px;
-    transform: rotate(-90deg);
-}
 
-.noteContainer{
     display: flex;
-    height: 25px;
+    justify-content: center;
+    align-items: center;
 }
 
-.noteContainer div{
-    margin: 0 113px 0 1px;
+#maker{
+    display:inline-block;
+    margin: auto;
+    padding: 50px;
+}
+
+#title{
+    text-align: center;
+    font-size: 20px;
+}
+
+#play{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 25px;
 }
 
 #container{
-    width: 1000px;
+    display:inline-block;
+    margin: auto;
+}
+
+.rangeContainer{
+    display: flex;
+    height: 110px;
+}
+
+.rangeContainer input{
+    transform: rotate(-90deg);
+    width: 100px;
 }
 
 input[type=range]{
@@ -33,7 +51,7 @@ input[type=range]{
 
 :root{
     --thumb_box-shadow: 0px 0px 1px #000000, 0px 0px 0px #0d0d0d;
-    --thumb_border: 0px solid #000000;
+    --thumb_border: 1px solid #000000;
     --thumb_height: 37px;
     --thumb_width: 37px;
     --thumb_border-radius: 3px;
@@ -69,3 +87,19 @@ input[type=range]::-ms-thumb {
     border-radius: var(--thumb_border-radius);
     cursor: var(--thumb_cursor);
 }
+
+@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+    html {
+      transform: rotate(-90deg);
+      transform-origin: left top;
+      width: 100vh;
+      overflow-x: hidden;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+
+    .rangeContainer input{
+        width: 62px;
+    }
+  }
