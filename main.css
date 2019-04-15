@@ -7,12 +7,19 @@ html,body{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    font-family: 'Lucida Bright', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 #maker{
     display:inline-block;
     margin: auto;
-    padding: 50px;
+    padding: 30px;
+    background-image: url(media/birch-wood-texture.svg);
+    background-size: cover;
+    transform: scale(1.5);
+    border-radius: 25px;
+    border: .5px solid black;
 }
 
 #title{
@@ -26,11 +33,16 @@ html,body{
     align-items: center;
     margin: auto;
     margin-top: 25px;
+    background:SKYBLUE;
+    border: 2px solid lightgrey;
+    padding: 10px 15px;
+    color: white;
 }
 
 #container{
     display:inline-block;
     margin: auto;
+    
 }
 
 .rangeContainer{
@@ -50,7 +62,7 @@ input[type=range]{
 }
 
 :root{
-    --thumb_box-shadow: 0px 0px 1px #000000, 0px 0px 0px #0d0d0d;
+    --thumb_background: white;
     --thumb_border: 1px solid #000000;
     --thumb_height: 37px;
     --thumb_width: 37px;
@@ -60,7 +72,7 @@ input[type=range]{
 
 input[type=range]::-webkit-slider-thumb{
     -webkit-appearance: none;
-    box-shadow: var(--thumb_box-shadow);
+    background: var(--thumb_background);
     border: var(--thumb_border);
     height: var(--thumb_height);
     width: var(--thumb_width);
@@ -70,7 +82,7 @@ input[type=range]::-webkit-slider-thumb{
 
 input[type=range]::-moz-range-thumb {
     -webkit-appearance: none;
-    box-shadow: var(--thumb_box-shadow);
+    background: var(--thumb_background);
     border: var(--thumb_border);
     height: var(--thumb_height);
     width: var(--thumb_width);
@@ -80,7 +92,7 @@ input[type=range]::-moz-range-thumb {
 
 input[type=range]::-ms-thumb {
     -webkit-appearance: none;
-    box-shadow: var(--thumb_box-shadow);
+    background: var(--thumb_background);
     border: var(--thumb_border);
     height: var(--thumb_height);
     width: var(--thumb_width);
@@ -91,6 +103,10 @@ input[type=range]::-ms-thumb {
 @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: portrait) {
     html {
       transform: rotate(90deg);
+    }
+
+    #maker{
+        transform: none;
     }
 
     .rangeContainer input{
