@@ -14,6 +14,7 @@ const melodyNotes = (noteValues) => {
 }
 
 const playMelody = (melodyNotes, scale) => {  
+    
     const holdNote = (melodyNotes,i) => {
         let hold = 1
         i++
@@ -30,48 +31,52 @@ const playMelody = (melodyNotes, scale) => {
         return hold
     }
     
-    const waitFor = (ms) => new Promise(r => setTimeout(r, ms));
-
+    const waitFor = (ms) => new Promise(r => setTimeout(r, ms))
+    
     async function asyncForEach(array, callback) {
         for (let i = 0; i < array.length; i++) {
-          await callback(array[i], i, array);
+            await callback(array[i], i, array)
         }
-      }
-
+    }
+    
     asyncForEach(melodyNotes, async (note,i) => {
         createOscillator(scale[note],holdNote(melodyNotes,i))
-        await waitFor(setBPM(bpm));
+        await waitFor(setBPM(bpm))
     })
 }
 
 const createOscillator = (frequency, hold) => {
-    const audio = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audio.createOscillator();
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+    const oscillator = audioCtx.createOscillator()
     const noteLength = 120
-
-    oscillator.type = 'square';
-    oscillator.frequency.setValueAtTime(frequency, audio.currentTime)
-    oscillator.connect(audio.destination);
-    oscillator.start();
-    setTimeout(() => oscillator.stop(0), noteLength*hold)
+    
+    oscillator.type = 'square'
+    oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime)
+    oscillator.connect(audioCtx.destination)
+    oscillator.start()
+    setTimeout(() => oscillator.stop(audioCtx.currentTime), noteLength*hold)
 }
 
 let alreadyClicked = false
+const btn = document.getElementById('play')
 document.getElementById('play').onclick = () => {
-	if(alreadyClicked == false){
-		playMelody(melodyNotes(noteValues),scale)
+    if(alreadyClicked == false){
+        playMelody(melodyNotes(noteValues),scale)
 		alreadyClicked = true
-		setTimeout(() => alreadyClicked = false, setBPM(bpm)*16)
+		setTimeout(() => {
+            btn.innerHTML = '&#9658;'
+            alreadyClicked = false
+        }, setBPM(bpm)*16)
 	}else{
-		//window.alert("Melody already playing")
-		console.log("wait:", setBPM(bpm)*16)
+        btn.innerHTML = '&#215;'
 	}
 }
 
-const displayNote = (note,i) => {
+const displayNote = (note,color,i) => {
     let svg = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50' transform='rotate(90)'><text transform='translate(12.5 37.5)'>" + note + "</text></svg>\")"
-    let styleElement = document.head.appendChild(document.createElement("style"));
-    styleElement.innerHTML = "#slider" + i + "::-webkit-slider-thumb {background-image: " + svg + ";} #slider" + i + "::-moz-range-thumb {background-image: " + svg + ";} #slider" + i + "::-ms-thumb {background-image: " + svg + ";}";
+    let border = '2px solid ' + color
+    let styleElement = document.head.appendChild(document.createElement("style"))
+    styleElement.innerHTML = "#slider" + i + "::-webkit-slider-thumb {background-image: " + svg + ";border: " + border + "} #slider" + i + "::-moz-range-thumb {background-image: " + svg + ";border: " + border + "} #slider" + i + "::-ms-thumb {background-image: " + svg + ";border: " + border + "}"
 }
 
 const displayNotes = (notes) => {
@@ -79,41 +84,50 @@ const displayNotes = (notes) => {
         const updateNotes = () => {
             switch(note.value){
                 case '0':
-                    displayNote('Zz',i)
+                    displayNote('Zz','GREY',i)
                     break
                 case '1':
-                    displayNote('-',i)
+                    displayNote('-','PALETURQUOISE',i)
                     break
                 case '2':
-                case '9':
-                    displayNote('G',i)
+                    displayNote('G','STEELBLUE',i)
                     break
                 case '3':
-                case '10':
-                    displayNote('A',i)
+                    displayNote('A','ROYALBLUE',i)
                     break
                 case '4':
-                case '11':
-                    displayNote('B',i)
+                    displayNote('B','MEDIUMSLATEBLUE',i)
                     break
                 case '5':
-                case '12':
-                    displayNote('C',i)  
+                    displayNote('C','MEDIUMORCHID',i)  
                     break
                 case '6':
-                case '13':
-                    displayNote('D',i)
+                    displayNote('D','ORCHID',i)
                     break
                 case '7':
-                case '14':
-                    displayNote('E',i)
+                    displayNote('E','VIOLET',i)
                     break
                 case '8':
-                    displayNote('F',i)
+                    displayNote('F','LIGHTCORAL',i)
                     break
-                case '15':
-                    displayNote('?',i)
+                case '9':
+                    displayNote('G','SALMON',i)
                     break
+                case '10':
+                    displayNote('A','CORAL',i)
+                    break
+                case '11':
+                    displayNote('B','DARKORANGE',i)
+                    break
+                case '12':
+                    displayNote('C','ORANGE',i)  
+                    break            
+                case '13':
+                    displayNote('D','GOLD',i)
+                    break
+                case '14':
+                    displayNote('E','KHAKI',i)
+                    break            
             }
 
         }
