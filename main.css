@@ -9,6 +9,8 @@ html,body{
     align-items: center;
 
     font-family: 'Lucida Bright', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-image: url(media/tileable_wood_texture.png);
+    background-repeat: repeat;
 }
 
 #maker{
